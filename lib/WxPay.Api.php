@@ -56,7 +56,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         $response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $result = WxPayResults::Init($response);
+        $result = WxPayResults::Init($response, $inputObj->wx_config);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
         return $result;
@@ -423,13 +423,13 @@ class WxPayApi
      *            回调类成员函数方法:notify(array($this, you_function));
      *            $callback 原型为：function function_name($data){}
      */
-    public static function notify($callback, &$msg)
+    public static function notify($callback, &$msg, $wx_config)
     {
         // 获取通知的数据
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml = file_get_contents('php://input');
         // 如果返回成功则验证签名
         try {
-            $result = WxPayResults::Init($xml);
+            $result = WxPayResults::Init($xml, $wx_config);
         } catch (WxPayException $e) {
             $msg = $e->errorMessage();
             return false;
