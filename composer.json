@@ -1,0 +1,7 @@
+{
+  "name" : "wx-pay-sdk",
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packagist.org/"
+  } ]
+}
