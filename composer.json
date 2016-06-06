@@ -1,7 +1,32 @@
 {
-  "name" : "wx-pay-sdk",
-  "repositories" : [ {
-    "type" : "composer",
-    "url" : "https://packagist.org/"
-  } ]
+  "name": "beauty-x/wx-pay-sdk",
+  "description": "PayX Server SDK PHP Library",
+  "keywords": [
+    "payx",
+    "mobile payment processing",
+    "api"
+  ],
+  "homepage": "https://www.kongqueyun.com/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PayX and contributors",
+      "homepage": "https://github.com/beauty-x/payx-sdk/tree/master/payx-sdk"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": { "" : "lib/" }
+  },
+  "extra": {
+    "branch-alias": {
+    }
+  }
 }
