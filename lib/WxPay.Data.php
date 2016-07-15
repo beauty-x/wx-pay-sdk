@@ -3027,6 +3027,50 @@ class WxPayMicroPay extends WxPayDataBase
     }
 
     /**
+     * 设置子商户公众账号ID
+     */
+    public function SetSub_appid($value)
+    {
+        $this->values['sub_appid'] = $value;
+    }
+
+    /**
+     * 获取子商户公众号ID
+     */
+    public function GetSub_appid()
+    {
+        return $this->values['sub_appid'];
+    }
+
+    /**
+     * 判断子商户公众号ID是否存在
+     *
+     * @return boolean
+     */
+    public function IsSub_appidSet()
+    {
+        return array_key_exists('sub_appid', $this->values);
+    }
+
+    /**
+     * 设置子商户号
+     */
+    public function SetSub_mch_id($value)
+    {
+        $this->values['sub_mch_id'] = $value;
+    }
+
+    public function GetSub_mch_id()
+    {
+        return $this->values['sub_mch_id'];
+    }
+
+    public function IsSub_mch_idSet()
+    {
+        return array_key_exists('sub_mch_id', $this->values);
+    }
+
+    /**
      * 设置终端设备号(商户自定义，如门店编号)
      *
      * @param string $value

@@ -242,37 +242,29 @@ class WxPayApi
      * WxPayWxPayMicroPay中body、out_trade_no、total_fee、auth_code参数必填
      * appid、mchid、spbill_create_ip、nonce_str不需要填入
      *
-     * @param WxPayWxPayMicroPay $inputObj
+     * @param WxPayMicroPay $inputObj
      * @param int $timeOut
      */
-    public static function micropay($inputObj, $timeOut = 10)
+    public static function micropay($inputObj, $timeOut = 30)
     {
         $url = "https://api.mch.weixin.qq.com/pay/micropay";
         // 检测必填参数
         if (! $inputObj->IsBodySet()) {
             throw new WxPayException("提交被扫支付API接口中，缺少必填参数body！");
-        } else
-            if (! $inputObj->IsOut_trade_noSet()) {
-                throw new WxPayException("提交被扫支付API接口中，缺少必填参数out_trade_no！");
-            } else
-                if (! $inputObj->IsTotal_feeSet()) {
-                    throw new WxPayException("提交被扫支付API接口中，缺少必填参数total_fee！");
-                } else
-                    if (! $inputObj->IsAuth_codeSet()) {
-                        throw new WxPayException("提交被扫支付API接口中，缺少必填参数auth_code！");
-                    }
-
-        $inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']); // 终端ip
-        $inputObj->SetAppid(WxPayConfig::APPID); // 公众账号ID
-        $inputObj->SetMch_id(WxPayConfig::MCHID); // 商户号
-        $inputObj->SetNonce_str(self::getNonceStr()); // 随机字符串
+        } elseif (! $inputObj->IsOut_trade_noSet()) {
+            throw new WxPayException("提交被扫支付API接口中，缺少必填参数out_trade_no！");
+        } elseif (! $inputObj->IsTotal_feeSet()) {
+            throw new WxPayException("提交被扫支付API接口中，缺少必填参数total_fee！");
+        } elseif (! $inputObj->IsAuth_codeSet()) {
+            throw new WxPayException("提交被扫支付API接口中，缺少必填参数auth_code！");
+        }
 
         $inputObj->SetSign(); // 签名
         $xml = $inputObj->ToXml();
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         $response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $result = WxPayResults::Init($response);
+        $result = WxPayResults::Init($response, $inputObj->wx_config);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
         return $result;
